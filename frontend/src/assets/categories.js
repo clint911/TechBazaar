@@ -1,22 +1,22 @@
 const categories = [
     {
-        id: 1,
+        id: Date.now,
         name: "Phones",
         image: "./images/Category-CellPhone.png"
     }, 
     {
-        id: 2,
+        id: Date.now,
         name: "Laptops",
         
     }, 
     {
-        id: 3, 
+        id: Date.now, 
         name: "Monitors",
         image: "./images/Category-Computer.png"
         
     }, 
     {
-        id: 4, 
+        id: Date.now, 
         name: "Computer peripherals",
         image: "/images/Category-SmartWatch.png"
     }

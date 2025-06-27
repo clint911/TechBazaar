@@ -1,6 +1,6 @@
 const products = [
   {
-    id: 1,
+    id: Date.now,
     name: "Havic HV G-92 Gamepad",
     quantity: 20,
     image: [
@@ -16,7 +16,7 @@ const products = [
     description: "PlayStation 5 Controller Skin. High-quality vinyl with air channel adhesive for easy bubble-free install & mess-free removal. Pressure sensitive."
   },
   {
-    id: 2,
+    id: Date.now,
     name: "Dell XPS 13 Laptop",
     quantity: 10,
     image: [
@@ -29,12 +29,12 @@ const products = [
     description: "13-inch laptop designed with precision engineered details, stunning display, and 11th Gen Intel Core processor performance."
   },
   {
-    id: 3,
+    id: Date.now,
     name: "Apple iPhone 14 Pro",
     quantity: 15,
     image: [
-      { frontUrl: './images/iphone_front.png' },
-      { backUrl: './images/iphone_back.png' }
+      { frontUrl: 'https://i.pinimg.com/736x/3e/d1/59/3ed159dd00c07e6464c48941dbb91ad5.jpg' },
+      { backUrl: 'https://i.pinimg.com/736x/fd/37/2d/fd372da27388a5cbd2397d0f60792802.jpg' }
     ],
     category: "phones",
     liked: true,
@@ -42,7 +42,7 @@ const products = [
     description: "iPhone 14 Pro with Super Retina XDR display, 48MP camera, A16 Bionic chip, and dynamic island feature."
   },
   {
-    id: 4,
+    id: Date.now,
     name: "Samsung Smart Monitor M8",
     quantity: 8,
     image: [
@@ -55,7 +55,7 @@ const products = [
     description: "Smart Monitor with 4K UHD, built-in apps like Netflix, YouTube, and support for Microsoft Office 365 without a PC."
   },
   {
-    id: 5,
+    id: Date.now,
     name: "Logitech MX Master 3",
     quantity: 30,
     image: [
@@ -68,7 +68,7 @@ const products = [
     description: "Advanced wireless mouse with ergonomic design, ultra-fast scrolling, and app-specific customizations."
   },
   {
-    id: 6,
+    id: Date.now,
     name: "Corsair K95 RGB Platinum XT Keyboard",
     quantity: 12,
     image: [
