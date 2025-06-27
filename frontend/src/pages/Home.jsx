@@ -9,6 +9,7 @@ const Home = () => {
 
     const [category, setCategory] = useState([])
     const [productsList, setProductsList] = useState(products)
+    const [likedProducts, setLikedProducts] = useState([])
 
     const toggleLike = (id) => {
         setProductList((prevProducts) =>
@@ -23,6 +24,15 @@ const Home = () => {
 
         }
         fetchCategories();
+    }, [])
+
+
+    useEffect(() => {
+        const fetchLiked = () => {
+            const likedProducts = products.filter((product) => product.liked === true)
+            setLikedProducts(likedProducts)
+        }
+        fetchLiked()
     }, [])
     return (
         <div className="p-10">
@@ -77,30 +87,53 @@ const Home = () => {
                             <p className="text-red-500">Categories</p>
                         </div>
 
-                        <div className="mt-">
+                        <div className="">
                             <p className="text-3xl text-start"> Browse By Category </p>
                             <div className="grid grid-cols-4 gap-6 mt-10">
-                                <div className="border border-gray-400 w-30 h-full rounded flex flex-col items-center p-6 cursor-pointer">
-                                    <img src="/images/Category-Computer.png" alt="" />
-                                    <p> Monitors </p>
-                                </div>
+                                {categories.map((cat) => (
+                                    <div className="border border-gray-400 w-30 h-full rounded flex flex-col items-center p-6 cursor-pointer" key={cat.id}>
+                                        <img src={cat.image} alt="" />
+                                        <p> {cat.name} </p>
+                                    </div>
+                                ))}
 
-                                <div className="border border-gray-400 w-30 h-full rounded-md flex flex-col items-center p-6 cursor-pointer">
-                                    <img src="/images/Category-CellPhone.png" alt="" />
-                                    <p> Phones </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                </div>
 
-                                <div className="border border-gray-400 w-30 h-full rounded-md flex flex-col items-center p-6 cursor-pointer">
-                                    <img src="/images/Category-SmartWatch.png" alt="" />
-                                    <p> Peripherals </p>
-                                </div>
+                <div className="mt-20 flex flex-col gap-6">
+                    <div className="flex items-center gap-3">
+                        <div className="bg-red-500 h-10 w-5 rounded-sm"></div>
+                        <p className="text-red-500">Categories</p>
+                    </div>
 
-                                <div className="border border-gray-400 w-30 h-full rounded-md flex flex-col items-center p-6 cursor-pointer">
-                                    <img src="" alt="" />
-                                    <p></p>
-                                </div>
-
+                    <div className="">
+                        <div className="flex justify-between items-center">
+                            <p className="text-3xl"> Best Selling Products</p>
+                            <button className="bg-[#DB4444] text-white px-5 py-2"> View All </button>
+                        </div>
+                        <div className="mt-10">
+                            <div className="grid grid-cols-4 gap-7">
+                                {
+                                    likedProducts.map((product) => (
+                                        <div key={product.id} className="h-80 bg-green-500 w-full p-5 flex flex-col gap-6">
+                                            <div key={product.id} className="h-80 bg-green-500 w-full p-5">
+                                                <div className="relative h-40">
+                                                    <CiHeart
+                                                        onClick={() => toggleLike(product.id)}
+                                                        className={`absolute right-0 top-0 text-2xl cursor-pointer ${product.liked ? "text-red-600" : "text-white"
+                                                            }`}
+                                                    />
+                                                    <img src={product.image[0].frontUrl} alt="" />
+                                                </div>
+                                                <small>{product.name}</small>
+                                                <p>Ksh{product.price}</p>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>

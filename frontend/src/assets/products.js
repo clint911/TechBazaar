@@ -11,7 +11,7 @@ const products = [
       { backUrl: "./images/back.png" }
     ],
     category: "gaming",
-    liked: false,
+    liked: true,
     price: 4000,
     description: "PlayStation 5 Controller Skin. High-quality vinyl with air channel adhesive for easy bubble-free install & mess-free removal. Pressure sensitive."
   },
@@ -37,7 +37,7 @@ const products = [
       { backUrl: './images/iphone_back.png' }
     ],
     category: "phones",
-    liked: false,
+    liked: true,
     price: 140000,
     description: "iPhone 14 Pro with Super Retina XDR display, 48MP camera, A16 Bionic chip, and dynamic island feature."
   },
@@ -63,7 +63,7 @@ const products = [
       { sideUrl: './images/mouse_side.png' }
     ],
     category: "computer peripherals",
-    liked: false,
+    liked: true,
     price: 12000,
     description: "Advanced wireless mouse with ergonomic design, ultra-fast scrolling, and app-specific customizations."
   },
@@ -72,11 +72,11 @@ const products = [
     name: "Corsair K95 RGB Platinum XT Keyboard",
     quantity: 12,
     image: [
-      { frontUrl: './images/keyboard_front.png' },
-      { topUrl: './images/keyboard_top.png' }
+      { frontUrl: 'https://i.pinimg.com/736x/28/38/7a/28387a9c201e880f81a4dd2619923da7.jpg' },
+      { topUrl: 'https://i.pinimg.com/736x/79/12/24/79122463901c8a7de9000b2fb4063c6b.jpg' }
     ],
     category: "computer peripherals",
-    liked: false,
+    liked: true,
     price: 25000,
     description: "Mechanical gaming keyboard with dynamic RGB backlighting, macro keys, and aircraft-grade aluminum frame."
   }
