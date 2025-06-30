@@ -1,0 +1,11 @@
+Instructions
+
+1.Set up a database for the website using MongoDB.
+
+2.Implement user authentication using JSON Web Tokens (JWT).
+
+3.Create API endpoints for managing products, including adding, updating, and deleting products.
+
+4.Implement the shopping cart functionality.
+
+5.Implement order processing functionality.
