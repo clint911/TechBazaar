@@ -1,1 +1,16 @@
 Backend Challenge Solution implementation
+
+endpoints:
+    /api/auth/signup.js
+    /api/auth/login.js
+    /api/products
+    /api/products/?id -- product id
+    /api/products/product
+    /api/admin_profile --adding products functionality
+    /api/user_profile
+    /api/products/wishlist/?id -- user wishlist
+    /api/products/cart/?id -- user cart
+    /api/products/cart/?id/checkout -- user checkout
+    /api/about
+    /api/contact
+    /api/404
