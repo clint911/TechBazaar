@@ -6,6 +6,7 @@ import Announcements from '../components/Announcements';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { register } from "../redux/apiCalls";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     width: 100vw; /* For FullScreen Components */
@@ -90,19 +91,19 @@ const Already = styled.p`
 
 const Register = () => {
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [username, setUsername] = useState("");
+   
+    const [userName, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
     const dispatch = useDispatch();
 
-    const handleClick = (e) => {
+    const handleClick =async (e) => {
         e.preventDefault();
         setLoading(true);
 
@@ -111,11 +112,12 @@ const Register = () => {
             setLoading(false);
             return;
         } else {
-            const user = { firstName, lastName, username, email, password };
+            const user = { userName, email, password };
 
-            register(dispatch, user);
+            await register(dispatch, user);
             setMessage("Your account has been created successfully!!");
             setLoading(false);
+             navigate("/login");
         }
 
         setMessage("");
@@ -131,8 +133,6 @@ const Register = () => {
                 <Wrapper>
                     <Title>CREATE AN ACCOUNT</Title>
                     <Form>
-                        <Input className="focus:ring " placeholder="first name" onChange={(e) => setFirstName(e.target.value)} />
-                        <Input className="focus:ring" placeholder="last name" onChange={(e) => setLastName(e.target.value)} />
                         <Input className="focus:ring" placeholder="username" onChange={(e) => setUsername(e.target.value)} />
                         <Input className="focus:ring" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
                         <Input

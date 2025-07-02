@@ -1,8 +1,8 @@
 import { AppDataSource } from "../data-source"
 import { NextFunction, Request, Response } from "express"
 import { User } from "../entity/User"
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
+import * as bcrypt from "bcrypt"
+import * as jwt from "jsonwebtoken"
 import { ObjectId } from "mongodb"
 
 export class UserController {
@@ -51,7 +51,8 @@ export class UserController {
     }
 
     async register (request: Request, response: Response, next: NextFunction) {
-        const { userName, email, password } = request.body; 
+        try {
+            const { userName, email, password} = request.body; 
 
         // First Validation  
         if (!(userName && email && password)) {
@@ -89,6 +90,11 @@ export class UserController {
               process.env.JWT_SECRET,
                { expiresIn: "1h" });
         return response.status(201).json({ message: "User created successfully", token });
+            
+        } catch (error) {
+            console.log(error)
+            
+        }
     }
 
     // User Login 
