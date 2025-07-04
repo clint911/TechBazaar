@@ -2,6 +2,8 @@ import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from "@m
 import styled from "styled-components"
 import { mobile } from "../responsive"
 import { Link } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { addProduct } from "../redux/cartRedux";
 
 const Info = styled.div`
     opacity: 0;
@@ -64,17 +66,33 @@ const Image = styled.img`
     height: 100%;
     z-index: 2;
     object-fit: cover;
-`
 
+    
+`
 const Product = ({ item }) => {
+
+    const dispatch = useDispatch();
+
+    const handleAddToCart = () => {
+        dispatch(
+            addProduct({
+                ...item,
+                quantity: 1,
+                color: item.color?.[0] || "default",
+                size: item.size?.[0] || "default"
+            })
+        );
+    };
 
     return (
         <Container>
             <Circle>
                 <Image src={item.productImageUrl} alt="product" />
                 <Info>
-                    <Icon>
+                    <Icon onClick={handleAddToCart}>
+
                         <ShoppingCartOutlined />
+
                     </Icon>
                     <Icon>
                         <Link to={`/product/${item.id}`}>

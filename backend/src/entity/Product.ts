@@ -30,4 +30,5 @@ export class Product {
 
     @Column()
     stockQuantity: number
+
 }
