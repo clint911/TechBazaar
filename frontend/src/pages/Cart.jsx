@@ -238,8 +238,8 @@ const Cart = () => {
                       <b>ID:</b> {product._id}
                     </ProductId>
 
-                    {product.color ? (
-                      <ProductColor color={product.color} />
+                    {product.color.length > 0 ? (
+                      <ProductColor color={product.color[0]} />
                     ) : <p><b>Color: </b> <span className="text-gray-400 font-light">N/A</span> </p>}
 
                     {product.size ? (
@@ -264,26 +264,26 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>Ksh {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemPrice>Ksh 5.90</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemPrice>Ksh -5.90</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>Ksh {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <StripeCheckout
               name="myDuka"
               image="https://i.pinimg.com/236x/ba/23/42/ba2342cb873d79fcab89fd2df1d791c6.jpg"
               billingAddress
               shippingAddress
-              description={`Your total is $${cart.total}`}
+              description={`Your total is Ksh${cart.total}`}
               amount={cart.total * 100}
               token={onToken}
               stripeKey={KEY}

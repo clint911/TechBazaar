@@ -69,10 +69,10 @@ const ProductList = () => {
             <Option disabled>Color</Option>
             <Option>White</Option>
             <Option>Black</Option>
-            <Option>Red</Option>
+            {/* <Option>Red</Option>
             <Option>Blue</Option>
             <Option>Yellow</Option>
-            <Option>Green</Option>
+            <Option>Green</Option> */}
           </Select>
           <Select name="size" onChange={handleFilters}>
             <Option disabled>Size</Option>
@@ -80,7 +80,7 @@ const ProductList = () => {
             <Option>S</Option>
             <Option>M</Option>
             <Option>L</Option>
-            <Option>XL</Option>
+            {/* <Option>XL</Option> */}
           </Select>
         </Filter>
         <Filter>
