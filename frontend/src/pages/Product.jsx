@@ -139,9 +139,10 @@ const Product = () => {
         console.log("Product ID from params:", id);
 
         console.log("Current path:", location.pathname);
+        console.log("image url", product.productImageUrl)
 
         console.log(res.data)
-        setProduct(res.data);
+        setProduct(res.data.product);
 
       } catch (err) {
         console.log(err);
