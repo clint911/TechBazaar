@@ -19,7 +19,13 @@ export class ProductController {
         try {
             const id = request.params.id
 
-            const product = await this.productRepository.findOneBy({ id: new ObjectId(id) })
+            if (!ObjectId.isValid(id)) {
+            return response.status(400).json({
+                message: "Invalid product ID format",
+            });
+        }
+
+            const product = await this.productRepository.findOneBy({ _id: new ObjectId(id) } as any)
             
             if (!product) {
                 return response.status(404).json({ message: "Product not found" })
@@ -64,6 +70,7 @@ export class ProductController {
             const updateData = request.body
 
             const product = await this.productRepository.findOneBy({ id: new ObjectId(id) })
+            
             
             if (!product) {
                 return response.status(404).json({ message: "Product not found" })

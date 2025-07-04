@@ -7,6 +7,7 @@ import Announcements from '../components/Announcements';
 import { login } from "../redux/apiCalls";
 import { useDispatch } from "react-redux";
 import Loader from "../components/Loader";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     width: 100vw; /* For FullScreen Components */
@@ -92,24 +93,39 @@ const Links = styled.a`
 
 const Login = () => {
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
 
 
     const dispatch = useDispatch();
 
-    const handleClick = (e) => {
+    const handleClick =async (e) => {
         setLoading(true);
         e.preventDefault();
 
-        const user = { username, password };
+        const user = { email, password };
 
-        login(dispatch, user);
+       try {
+         const res = await login(dispatch, user);
+         if (res.token) {
+            setMessage("Login successful!");
+            console.log(res)
+            // Redirect or do something on success, e.g.:
+            navigate("/");
+        } else {
+            setError("Login failed. Please try again.");
+        }
+        
+       } catch (error) {
+        setError(error.message || "Something went wrong");        
+       }finally{
         setLoading(false);
+       }
     };
 
     if (loading) {
@@ -123,7 +139,7 @@ const Login = () => {
             <Wrapper>
                 <Title>SIGN IN</Title>
                 <Form>
-                    <Input className="focus:ring" placeholder="username" onChange={(e) => setUsername(e.target.value)} />
+                    <Input className="focus:ring" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
                     <Input className="focus:ring" placeholder="password" type="password" onChange={(e) => setPassword(e.target.value)} />
 
                     {error && <div className="error">{error}</div>}

@@ -216,7 +216,7 @@ const Cart = () => {
             image="https://i.pinimg.com/236x/ba/23/42/ba2342cb873d79fcab89fd2df1d791c6.jpg"
             billingAddress
             shippingAddress
-            description={`Your total is $${cart.total}`}
+            description={`Your total is ksh${cart.total}`}
             amount={cart.total * 100}
             token={onToken}
             stripeKey={KEY}
@@ -229,10 +229,10 @@ const Cart = () => {
             {cart.products.map(product => (
               <Product key={product._id} className="mt-2 pt-3">
                 <ProductDetail>
-                  <Image src={product.img} />
+                  <Image src={product.productImageUrl} />
                   <Details>
                     <ProductName>
-                      <b>Product:</b> {product.title}
+                      <b>Product:</b> {product.productName}
                     </ProductName>
                     <ProductId>
                       <b>ID:</b> {product._id}

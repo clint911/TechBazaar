@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const Container = styled.div``;
 
@@ -122,7 +123,9 @@ const Button = styled.button`
 
 const Product = () => {
   const location = useLocation();
-  const id = location.pathname.split("/")[2];
+
+  const { id } = useParams();
+  console.log("my ID: " ,id)
   const dispatch = useDispatch();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
@@ -132,8 +135,14 @@ const Product = () => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await publicRequest.get("/products/find/" + id);
+        const res = await publicRequest.get(`http://localhost:3000/api/products/${id}`);
+        console.log("Product ID from params:", id);
+
+        console.log("Current path:", location.pathname);
+
+        console.log(res.data)
         setProduct(res.data);
+
       } catch (err) {
         console.log(err);
       }
@@ -164,14 +173,14 @@ const Product = () => {
       <Announcements />
       <Wrapper>
         <ImgContainer>
-          <Image src={product.img} />
+          <Image src={product.productImageUrl} />
         </ImgContainer>
         <InfoContainer>
-          <Title>{product.title}</Title>
+          <Title>{product.productName}</Title>
           <Desc>
             {product.desc}
           </Desc>
-          <Price>$ {product.price}</Price>
+          <Price>Ksh {product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>

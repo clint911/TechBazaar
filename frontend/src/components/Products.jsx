@@ -25,13 +25,15 @@ const Products = ({ cat, filters, sort }) => {
         const getProducts = async () => {
             try {
                 const res = await axios.get(`http://localhost:3000/api/products?category=${cat}`);
-                const data = res.data;
-                console.log("Api reponse", data);
-                setProducts(data);
-
-                setLoading(false);
+                if (res.data.product) {
+                    setProducts(Array.isArray(res.data.product) ? res.data.product : [res.data.product]);
+                    console.log("Set products data:", res.data);
+                }
+                console.log("Api reponse", res);
             } catch (error) {
                 console.log(error.message);
+            } finally {
+                setLoading(false)
             }
         }
         getProducts();
@@ -42,7 +44,7 @@ const Products = ({ cat, filters, sort }) => {
             setFilteredProducts(
                 products.filter(item =>
                     Object.entries(filters).every(([key, value]) =>
-                        item[key].includes(value)
+                        item[key]?.includes(value)
                     )
                 )
             );
@@ -70,10 +72,19 @@ const Products = ({ cat, filters, sort }) => {
         <Container>
 
             {cat ? filteredProducts.map((item) =>
-                <Product key={item._id} item={item} />
+                <Product key={item._id || item.id} item={item} />
             ) : products.slice(0, 8).map((item) =>
                 <Product item={item} key={item._id} />
             )}
+
+            {/* {products.length === 0 && <p>No products found.</p>}
+
+            {products.map((item) => (
+                <div key={item._id || item.id}>
+                    <h4>{item.productName || "No Title"}</h4>
+                    <p>{item.price ? `$${item.price}` : "No Price"}</p>
+                </div>
+            ))} */}
         </Container>
     )
 }

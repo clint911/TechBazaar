@@ -71,13 +71,13 @@ const Product = ({ item }) => {
     return (
         <Container>
             <Circle>
-                <Image src={item.img} alt="product" />
+                <Image src={item.productImageUrl} alt="product" />
                 <Info>
                     <Icon>
                         <ShoppingCartOutlined />
                     </Icon>
                     <Icon>
-                        <Link to={`/product/${item._id}`}>
+                        <Link to={`/product/${item.id}`}>
                             <SearchOutlined />
                         </Link>
                     </Icon>

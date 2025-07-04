@@ -91,7 +91,7 @@ const Already = styled.p`
 
 const Register = () => {
 
-   
+
     const [userName, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -103,7 +103,7 @@ const Register = () => {
 
     const dispatch = useDispatch();
 
-    const handleClick =async (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
         setLoading(true);
 
@@ -111,13 +111,24 @@ const Register = () => {
             setError("Your password confirmation is incorrect!!");
             setLoading(false);
             return;
-        } else {
-            const user = { userName, email, password };
+        }
+        const user = { userName, email, password };
 
-            await register(dispatch, user);
-            setMessage("Your account has been created successfully!!");
-            setLoading(false);
-             navigate("/login");
+        try {
+            const res = await register(dispatch, user);
+
+            if (res?.token || res?.message) {
+                setMessage("Your account has been created successfully!!");
+                 console.log(res)
+                navigate("/login");
+            } else {
+                setError("Something went wrong. Try again.");
+            }
+
+        } catch (error) {
+            console.log("Error registering the user", error)
+        }finally{
+            setLoading(false)
         }
 
         setMessage("");
