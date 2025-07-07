@@ -5,7 +5,7 @@ import Products from '../components/Products'
 import NewsLetter from '../components/NewsLetter'
 import Footer from '../components/Footer'
 import { mobile } from '../responsive'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 import { useState } from 'react'
 
 const Container = styled.div``
@@ -42,10 +42,10 @@ const Option = styled.option`
 `
 
 const ProductList = () => {
-  const location = useLocation();
-  const cat = location.pathname.split("/")[2];
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest");
+
+  const { category: cat } = useParams();
 
   const handleFilters = (e) => {
     const value = e.target.value;

@@ -18,6 +18,8 @@ const Products = ({ cat, filters, sort }) => {
 
     const [loading, setLoading] = useState(false);
 
+
+
     useEffect(() => {
 
         setLoading(true);
@@ -28,6 +30,7 @@ const Products = ({ cat, filters, sort }) => {
                 const fetchedProducts = res.data.products || [];
                 setProducts(fetchedProducts);
                 console.log("Api reponse", res.data);
+                console.log("Fetching products for category:", cat)
             } catch (error) {
                 console.log(error.message);
             } finally {

@@ -7,12 +7,33 @@ export class ProductController {
     private productRepository = AppDataSource.getRepository(Product)
 
     async all(request: Request, response: Response, next: NextFunction) {
+        // try {
+        //     const products = await this.productRepository.find()
+        //     return response.status(200).json({ products })
+        // } catch (error) {
+        //     return response.status(500).json({ message: "Error fetching products", error: error.message })
+        // }
+
         try {
-            const products = await this.productRepository.find()
-            return response.status(200).json({ products })
-        } catch (error) {
-            return response.status(500).json({ message: "Error fetching products", error: error.message })
-        }
+    const { category } = request.query;
+
+    // Build base query
+    let query = this.productRepository.createQueryBuilder("product");
+
+    // Apply category filter if provided
+    if (category) {
+      query = query.where("product.category = :category", { category });
+    }
+
+    const products = await query.getMany();
+
+    return response.status(200).json({ products });
+  } catch (error) {
+    return response.status(500).json({
+      message: "Error fetching products",
+      error: error.message,
+    });
+  }
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
