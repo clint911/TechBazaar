@@ -103,7 +103,7 @@ const NavBar = () => {
         </Left>
         <Center>
           <Link to="/">
-            <Logo id="logo">my<LogoSpan id="logo">Duka.</LogoSpan></Logo>
+            <Logo id="logo">Tech<LogoSpan id="logo">Bazaar.</LogoSpan></Logo>
           </Link>
         </Center>
         <Right>

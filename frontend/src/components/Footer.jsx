@@ -11,7 +11,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
     display: flex;
-    ${mobile({ flexDirection: "column", marginLeft:"0px" })}
+    ${mobile({ flexDirection: "column", marginLeft: "0px" })}
     margin-left:70px;
 `
 
@@ -95,10 +95,9 @@ const Footer = () => {
         <Container>
             <Wrapper>
                 <Left>
-                    <Logo id="logo">my<LogoSpan id="logo">Duka.</LogoSpan></Logo>
+                    <Logo id="logo">Tech<LogoSpan id="logo">Bazaar.</LogoSpan></Logo>
                     <Desc>
-                        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don{"'"}t look even slightly believable.
-                    </Desc>
+                        TechBazaar is your one-stop shop for the latest phones, laptops, and computer accessories — all at unbeatable prices.                    </Desc>
                     <SocialContainer>
                         <SocialIcon color="385999">
                             <Facebook />
@@ -137,7 +136,7 @@ const Footer = () => {
                         <Phone style={{ marginRight: "10px" }} />Phone: +1 234 56789
                     </ContactItem>
                     <ContactItem>
-                        <MailOutline style={{ marginRight: "10px" }} />Email: Contact@myDuka.com
+                        <MailOutline style={{ marginRight: "10px" }} />Email: Contact@techbazaar.com
                     </ContactItem>
                     <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
                 </Right>

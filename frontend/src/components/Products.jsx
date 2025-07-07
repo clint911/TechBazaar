@@ -18,22 +18,29 @@ const Products = ({ cat, filters, sort }) => {
 
     const [loading, setLoading] = useState(false);
 
+
+
     useEffect(() => {
 
         setLoading(true);
 
         const getProducts = async () => {
-            try {
-                const res = await axios.get(`http://localhost:3000/api/products?category=${cat}`);
-                const fetchedProducts = res.data.products || [];
-                setProducts(fetchedProducts);
-                console.log("Api reponse", res.data);
-            } catch (error) {
-                console.log(error.message);
-            } finally {
-                setLoading(false)
-            }
-        }
+    try {
+        const url = cat
+            ? `http://localhost:3000/api/products?category=${cat}`
+            : `http://localhost:3000/api/products`;
+
+        const res = await axios.get(url);
+        const fetchedProducts = res.data.products || [];
+        setProducts(fetchedProducts);
+        console.log("Api response", res.data);
+    } catch (error) {
+        console.log(error.message);
+    } finally {
+        setLoading(false);
+    }
+}
+
         getProducts();
     }, [cat]);
 

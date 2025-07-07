@@ -7,11 +7,33 @@ export class ProductController {
     private productRepository = AppDataSource.getRepository(Product)
 
     async all(request: Request, response: Response, next: NextFunction) {
+        // try {
+        //     const products = await this.productRepository.find()
+        //     return response.status(200).json({ products })
+        // } catch (error) {
+        //     return response.status(500).json({ message: "Error fetching products", error: error.message })
+        // }
+
         try {
-            const products = await this.productRepository.find()
-            return response.status(200).json({ products })
+            const { category } = request.query;
+
+            console.log("Received category:", category);
+
+            const filter: any = {};
+
+            if (category) {
+                filter.category = category;
+            }
+
+            const products = await this.productRepository.find({ where: filter });
+
+            return response.status(200).json({ products });
         } catch (error) {
-            return response.status(500).json({ message: "Error fetching products", error: error.message })
+            console.error("Error fetching products:", error);
+            return response.status(500).json({
+                message: "Error fetching products",
+                error: error.message,
+            });
         }
     }
 
@@ -20,13 +42,13 @@ export class ProductController {
             const id = request.params.id
 
             if (!ObjectId.isValid(id)) {
-            return response.status(400).json({
-                message: "Invalid product ID format",
-            });
-        }
+                return response.status(400).json({
+                    message: "Invalid product ID format",
+                });
+            }
 
             const product = await this.productRepository.findOneBy({ _id: new ObjectId(id) } as any)
-            
+
             if (!product) {
                 return response.status(404).json({ message: "Product not found" })
             }
@@ -70,8 +92,8 @@ export class ProductController {
             const updateData = request.body
 
             const product = await this.productRepository.findOneBy({ id: new ObjectId(id) })
-            
-            
+
+
             if (!product) {
                 return response.status(404).json({ message: "Product not found" })
             }
@@ -91,7 +113,7 @@ export class ProductController {
             const id = request.params.id
 
             const product = await this.productRepository.findOneBy({ id: new ObjectId(id) })
-            
+
             if (!product) {
                 return response.status(404).json({ message: "Product not found" })
             }
