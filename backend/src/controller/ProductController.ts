@@ -15,25 +15,26 @@ export class ProductController {
         // }
 
         try {
-    const { category } = request.query;
+            const { category } = request.query;
 
-    // Build base query
-    let query = this.productRepository.createQueryBuilder("product");
+            console.log("Received category:", category);
 
-    // Apply category filter if provided
-    if (category) {
-      query = query.where("product.category = :category", { category });
-    }
+            const filter: any = {};
 
-    const products = await query.getMany();
+            if (category) {
+                filter.category = category;
+            }
 
-    return response.status(200).json({ products });
-  } catch (error) {
-    return response.status(500).json({
-      message: "Error fetching products",
-      error: error.message,
-    });
-  }
+            const products = await this.productRepository.find({ where: filter });
+
+            return response.status(200).json({ products });
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            return response.status(500).json({
+                message: "Error fetching products",
+                error: error.message,
+            });
+        }
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
@@ -41,13 +42,13 @@ export class ProductController {
             const id = request.params.id
 
             if (!ObjectId.isValid(id)) {
-            return response.status(400).json({
-                message: "Invalid product ID format",
-            });
-        }
+                return response.status(400).json({
+                    message: "Invalid product ID format",
+                });
+            }
 
             const product = await this.productRepository.findOneBy({ _id: new ObjectId(id) } as any)
-            
+
             if (!product) {
                 return response.status(404).json({ message: "Product not found" })
             }
@@ -91,8 +92,8 @@ export class ProductController {
             const updateData = request.body
 
             const product = await this.productRepository.findOneBy({ id: new ObjectId(id) })
-            
-            
+
+
             if (!product) {
                 return response.status(404).json({ message: "Product not found" })
             }
@@ -112,7 +113,7 @@ export class ProductController {
             const id = request.params.id
 
             const product = await this.productRepository.findOneBy({ id: new ObjectId(id) })
-            
+
             if (!product) {
                 return response.status(404).json({ message: "Product not found" })
             }
