@@ -8,8 +8,20 @@ const Container = styled.div`
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: space-between;
+    justify-content: flex-start;
+  gap: 20px;
 `
+
+const Header = styled.h1`
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+`;
 const Products = ({ cat, filters, sort }) => {
 
     const [products, setProducts] = useState([]);
@@ -25,21 +37,21 @@ const Products = ({ cat, filters, sort }) => {
         setLoading(true);
 
         const getProducts = async () => {
-    try {
-        const url = cat
-            ? `http://localhost:3000/api/products?category=${cat}`
-            : `http://localhost:3000/api/products`;
+            try {
+                const url = cat
+                    ? `http://localhost:3000/api/products?category=${cat}`
+                    : `http://localhost:3000/api/products`;
 
-        const res = await axios.get(url);
-        const fetchedProducts = res.data.products || [];
-        setProducts(fetchedProducts);
-        console.log("Api response", res.data);
-    } catch (error) {
-        console.log(error.message);
-    } finally {
-        setLoading(false);
-    }
-}
+                const res = await axios.get(url);
+                const fetchedProducts = res.data.products || [];
+                setProducts(fetchedProducts);
+                console.log("Api response", res.data);
+            } catch (error) {
+                console.log(error.message);
+            } finally {
+                setLoading(false);
+            }
+        }
 
         getProducts();
     }, [cat]);
@@ -76,11 +88,33 @@ const Products = ({ cat, filters, sort }) => {
     return (
         <Container>
 
-            {cat ? filteredProducts.map((item) =>
+            {/* <Header className="font-bold text-3xl">Products</Header>
+
+            <div className="grid grid-cols-4 gap-6">
+                {cat ? filteredProducts.map((item) =>
                 <Product key={item._id || item.id} item={item} />
             ) : products.slice(0, 8).map((item) =>
                 <Product item={item} key={item._id} />
             )}
+            </div> */}
+
+
+            <Container>
+                <Header className="font-bold text-3xl">Products</Header>
+
+                {/* Show "no products found" conditionally */}
+                {(!loading && (cat ? filteredProducts.length === 0 : products.length === 0)) ? (
+                    <p style={{ textAlign: "center", fontSize: "1.2rem", color: "#666" }}>
+                        No products found.
+                    </p>
+                ) : (
+                    <div className="grid grid-cols-4 gap-6">
+                        {(cat ? filteredProducts : products.slice(0, 8)).map((item) => (
+                            <Product key={item._id || item.id} item={item} />
+                        ))}
+                    </div>
+                )}
+            </Container>
 
             {/* {products.length === 0 && <p>No products found.</p>}
 
