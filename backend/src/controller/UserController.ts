@@ -20,7 +20,7 @@ export class UserController {
             return { error: "unregistered user" }
         }
         return {
-            user: user.id,
+             user: user.id,
             userEmail: user.email,
             userName: user.userName,
             userCreated: user.createdAt,
@@ -51,30 +51,30 @@ export class UserController {
     async register(request: Request, response: Response, next: NextFunction) {
         try {
             const { userName, email, password } = request.body;
-            if (!(userName && email && password)) {
+        if (!(userName && email && password)) {
                 return { error: "Error! Missing field detected, All fields are required" };
-            }
+        }
             const existingUser = await this.userRepository.findOne({ where: { userName } });
-            if (existingUser) {
+        if (existingUser) {
                 return { error: "Error! User already exists, please try again with a different username and/or email" };
-            }
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const createdUser = this.userRepository.create({
-                userName,
-                email,
-                password: hashedPassword,
-                role: "normal_user" as any,
-                createdAt: new Date(),
-                updatedAt: new Date()
-            });
-            await this.userRepository.save(createdUser);
-            const token = jwt.sign(
-                {
-                    userId: createdUser.id,
-                    email: createdUser.email,
-                    role: createdUser.role
-                },
-                process.env.JWT_SECRET,
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const createdUser = this.userRepository.create({
+            userName,
+            email,
+            password: hashedPassword,
+            role: "normal_user" as any,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        await this.userRepository.save(createdUser);
+        const token = jwt.sign(
+            {
+                userId: createdUser.id,
+                email: createdUser.email,
+                role: createdUser.role
+             },
+              process.env.JWT_SECRET,
                 { expiresIn: "1h" }
             );
             return { message: "User created successfully", token };
@@ -99,17 +99,17 @@ export class UserController {
         const token = jwt.sign(
             {
                 userId: user.id, email: user.email, role: user.role
-            },
-            process.env.JWT_SECRET,
+             },
+             process.env.JWT_SECRET,
             {
                 expiresIn: "1h"
             }
         );
         return {
-            message: "Login successful",
-            token,
-            userId: user.id,
-            role: user.role
+             message: "Login successful",
+             token,
+             userId: user.id,
+             role: user.role
         };
     }
 
