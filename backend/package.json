@@ -4,6 +4,7 @@
    "description": "Awesome project developed with TypeORM.",
    "type": "commonjs",
    "devDependencies": {
+      "@types/cors": "^2.8.19",
       "typescript": "^5.8.2"
    },
    "dependencies": {
@@ -22,12 +23,12 @@
    },
    "scripts": {
       "build": "tsc",
-      "start": "node build/index.js",
+      "start": "node dist/index.js",
       "dev": "NODE_ENV=development ts-node src/index.ts",
       "prod": "NODE_ENV=production ts-node src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs"
    },
    "engines": {
-      "node": "20.x"
+      "node": "22.x"
    }
 }

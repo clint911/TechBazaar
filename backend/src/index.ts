@@ -4,7 +4,7 @@ import { Request, Response } from "express"
 import { AppDataSource } from "./data-source"
 import { Routes } from "./routes"
 import { User } from "./entity/User"
-import { UserRole } from "./entity/User";
+//import { UserRole } from "./entity/User";
 import * as cors from 'cors'
 
 AppDataSource.initialize().then(async () => {
