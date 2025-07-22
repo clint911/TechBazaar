@@ -29,13 +29,13 @@ export const categories = [
         id: 1,
         img: "https://i.pinimg.com/736x/bb/83/46/bb83469f7cda7aec7991d646919c9b3c.jpg",
         title: "Computers",
-        cat: "accessories"
+        cat: "computers"
     },
     {
         id: 2,
         img: "https://i.pinimg.com/736x/9b/d5/da/9bd5da5b0e78111f655f3ce54950e170.jpg",
         title: "Phones",
-        cat: "Phones"
+        cat: "phones"
     },
     {
         id: 3,

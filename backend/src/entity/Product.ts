@@ -1,6 +1,6 @@
 import { Entity, ObjectIdColumn, ObjectId, Column } from "typeorm";
 
-type ProductCategory = "computers" | "laptops" | "keyboards" | "tablets";
+type ProductCategory = "computers" | "laptops" | "keyboards" | "phones";
 
 @Entity()
 export class Product {

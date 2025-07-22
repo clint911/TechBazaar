@@ -91,7 +91,7 @@ export class ProductController {
             const id = request.params.id
             const updateData = request.body
 
-            const product = await this.productRepository.findOneBy({ id: new ObjectId(id) })
+            const product = await this.productRepository.findOneBy({ _id: new ObjectId(id) }as any)
 
 
             if (!product) {
