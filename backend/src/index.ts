@@ -56,6 +56,7 @@ AppDataSource.initialize().then(async () => {
             updatedAt: new Date()
         })
     )
+    
 
     console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results")
 

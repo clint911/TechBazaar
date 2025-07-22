@@ -17,17 +17,16 @@ export class CartController {
             const userId = (request as any).user.userId
             const cart = await this.cartRepository.findOneBy({ userId: new ObjectId(userId.toString()) })
             if (!cart) {
-                return response.status(404).json({ message: "Cart not found" })
+                return { error: "Cart not found" }
             }
             const cartItems = await this.cartItemRepository.findBy({ cartId: cart.id })
-            // Populate product details for each cart item
             const itemsWithProduct = await Promise.all(cartItems.map(async item => {
                 const product = await this.productRepository.findOneBy({ id: item.productId })
                 return { ...item, product }
             }))
-            return response.status(200).json({ cart, cartItems: itemsWithProduct })
+            return { cart, cartItems: itemsWithProduct }
         } catch (error) {
-            return response.status(500).json({ message: "Error fetching cart", error: error.message })
+            return { error: "Error fetching cart", details: error.message }
         }
     }
 
@@ -36,9 +35,8 @@ export class CartController {
             const userId = (request as any).user.userId
             const { productId, quantity } = request.body
             if (!(productId && quantity)) {
-                return response.status(400).json({ message: "Error! Missing required fields" })
+                return { error: "Error! Missing required fields" }
             }
-            // Find or create cart for user
             let cart = await this.cartRepository.findOneBy({ userId: new ObjectId(userId.toString()) })
             if (!cart) {
                 cart = this.cartRepository.create({
@@ -50,12 +48,10 @@ export class CartController {
                 })
                 await this.cartRepository.save(cart)
             }
-            // Check if product exists
             const product = await this.productRepository.findOneBy({ id: new ObjectId(productId) })
             if (!product) {
-                return response.status(404).json({ message: "Product not found" })
+                return { error: "Product not found" }
             }
-            // Check if product is already in cart
             let cartItem = await this.cartItemRepository.findOneBy({ cartId: cart.id, productId: product.id })
             if (cartItem) {
                 cartItem.quantity += quantity
@@ -68,7 +64,6 @@ export class CartController {
                 })
                 await this.cartItemRepository.save(cartItem)
             }
-            // Update total price
             const cartItems = await this.cartItemRepository.findBy({ cartId: cart.id })
             cart.totalPrice = await cartItems.reduce(async (totalPromise, item) => {
                 const total = await totalPromise
@@ -77,9 +72,9 @@ export class CartController {
             }, Promise.resolve(0))
             cart.updatedAt = new Date()
             await this.cartRepository.save(cart)
-            return response.status(200).json({ message: "Product added to cart successfully", cart })
+            return { message: "Product added to cart successfully", cart }
         } catch (error) {
-            return response.status(500).json({ message: "Error adding to cart", error: error.message })
+            return { error: "Error adding to cart", details: error.message }
         }
     }
 
@@ -88,19 +83,18 @@ export class CartController {
             const userId = (request as any).user.userId
             const { productId, quantity } = request.body
             if (!(productId && quantity)) {
-                return response.status(400).json({ message: "Error! Missing required fields" })
+                return { error: "Error! Missing required fields" }
             }
             const cart = await this.cartRepository.findOneBy({ userId: new ObjectId(userId.toString()) })
             if (!cart) {
-                return response.status(404).json({ message: "Cart not found" })
+                return { error: "Cart not found" }
             }
             const cartItem = await this.cartItemRepository.findOneBy({ cartId: cart.id, productId: new ObjectId(productId) })
             if (!cartItem) {
-                return response.status(404).json({ message: "Product not found in cart" })
+                return { error: "Product not found in cart" }
             }
             cartItem.quantity = quantity
             await this.cartItemRepository.save(cartItem)
-            // Update total price
             const cartItems = await this.cartItemRepository.findBy({ cartId: cart.id })
             cart.totalPrice = await cartItems.reduce(async (totalPromise, item) => {
                 const total = await totalPromise
@@ -109,9 +103,9 @@ export class CartController {
             }, Promise.resolve(0))
             cart.updatedAt = new Date()
             await this.cartRepository.save(cart)
-            return response.status(200).json({ message: "Quantity updated successfully", cart })
+            return { message: "Quantity updated successfully", cart }
         } catch (error) {
-            return response.status(500).json({ message: "Error updating quantity", error: error.message })
+            return { error: "Error updating quantity", details: error.message }
         }
     }
 
@@ -120,18 +114,17 @@ export class CartController {
             const userId = (request as any).user.userId
             const { productId } = request.body
             if (!productId) {
-                return response.status(400).json({ message: "Error! Product ID is required" })
+                return { error: "Error! Product ID is required" }
             }
             const cart = await this.cartRepository.findOneBy({ userId: new ObjectId(userId.toString()) })
             if (!cart) {
-                return response.status(404).json({ message: "Cart not found" })
+                return { error: "Cart not found" }
             }
             const cartItem = await this.cartItemRepository.findOneBy({ cartId: cart.id, productId: new ObjectId(productId) })
             if (!cartItem) {
-                return response.status(404).json({ message: "Product not found in cart" })
+                return { error: "Product not found in cart" }
             }
             await this.cartItemRepository.remove(cartItem)
-            // Update total price
             const cartItems = await this.cartItemRepository.findBy({ cartId: cart.id })
             cart.totalPrice = await cartItems.reduce(async (totalPromise, item) => {
                 const total = await totalPromise
@@ -140,9 +133,9 @@ export class CartController {
             }, Promise.resolve(0))
             cart.updatedAt = new Date()
             await this.cartRepository.save(cart)
-            return response.status(200).json({ message: "Product removed from cart successfully", cart })
+            return { message: "Product removed from cart successfully", cart }
         } catch (error) {
-            return response.status(500).json({ message: "Error removing from cart", error: error.message })
+            return { error: "Error removing from cart", details: error.message }
         }
     }
 } 
